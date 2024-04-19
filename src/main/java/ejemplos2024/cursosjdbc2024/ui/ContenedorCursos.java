@@ -3,6 +3,7 @@ package ejemplos2024.cursosjdbc2024.ui;
 import ejemplos2024.cursosjdbc2024.helpers.CursosHelper;
 import ejemplos2024.cursosjdbc2024.modelos.Curso;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -17,8 +18,10 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import org.kordamp.bootstrapfx.BootstrapFX;
+import org.kordamp.bootstrapfx.scene.layout.Panel;
 
-public class ContenedorCursos extends BorderPane {
+public class ContenedorCursos extends Panel {
     private TableView<Curso> tablaCursos;
     private TableColumn<Curso, String> colClave;
     private TableColumn<Curso, String> colNombre;
@@ -27,12 +30,10 @@ public class ContenedorCursos extends BorderPane {
     private TableColumn<Curso, String> colCosto;
     private TableColumn<Curso, Date> colFechaInicio;
     private TableColumn<Curso, Date> colFechaTermino;
-    private TitledPane paneCursos;
-    private TitledPane paneOperacionesCursos;
     private Button btnAgregar;
     private Button btnModificar;
     private Button btnEliminar;
-    private TitledPane paneEdicionCursos;
+    private VBox paneEdicionCursos;
     private Label etiClave;
     private TextField txtClave;
     private Label etiNombre;
@@ -50,20 +51,154 @@ public class ContenedorCursos extends BorderPane {
     private Label etiFechaTermino;
     private DatePicker dpFechaTermino;
     private Curso curso;
+    private BorderPane contenedor;
+    private ScrollPane scrollPanelCurso;
 
 
     private ObservableList<Curso> listaCursos;
 
     public ContenedorCursos() {
+        super("Registro y Edición de Cursos");
+        getStyleClass().add("panel-primary");
+
         inicializarComponentes();
-        crearPanelEdicionCurso();
         cargarDatos();
         curso = null;
     }
 
-    private void crearPanelEdicionCurso() {
-        paneEdicionCursos = new TitledPane();
-        paneEdicionCursos.setText("Captura de los Datos de un Curso");
+    private void inicializarComponentes() {
+        inicializarTabla();
+        inicializarPanelBotones();
+        inicializarPanelEdicionCurso();
+    }
+
+    private void inicializarTabla() {
+        tablaCursos = new TableView<Curso>();
+        tablaCursos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tablaCursos.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Curso>() {
+            @Override
+            public void onChanged(Change<? extends Curso> change) {
+                var seleccionados =change.getList();
+
+                if (seleccionados.size() > 0) {
+                    curso = seleccionados.get(0);
+                    btnModificar.setDisable(false);
+                    btnEliminar.setDisable(false);
+                } else {
+                    btnModificar.setDisable(true);
+                    btnEliminar.setDisable(true);
+                }
+            }
+        });
+
+        colClave = new TableColumn<Curso, String>("Clave");
+        colClave.setCellValueFactory(
+                new PropertyValueFactory<Curso, String>("clave"));
+
+        colNombre = new TableColumn<Curso, String>("Nombre");
+        colNombre.setCellValueFactory(new PropertyValueFactory<Curso, String>("nombre"));
+        colNombre.setMinWidth(200);
+
+        colInstructor = new TableColumn<Curso, String>("Instructor");
+        colInstructor.setCellValueFactory(new PropertyValueFactory<Curso, String>("instructor"));
+        colInstructor.setMinWidth(200);
+
+        colNoHoras = new TableColumn<Curso, Integer>("No. Horas");
+        colNoHoras.setCellValueFactory(new PropertyValueFactory<Curso, Integer>("noHoras"));
+
+
+        colCosto = new TableColumn<Curso, String>("Costo");
+        colCosto.setCellValueFactory(
+                new PropertyValueFactory<Curso, String>("scosto"));
+        colCosto.setMinWidth(100);
+        colCosto.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        colFechaInicio = new TableColumn<Curso, Date>("Fecha de Inicio");
+        colFechaInicio.setCellValueFactory(new PropertyValueFactory<Curso, Date>("fechaInicio"));
+
+        colFechaTermino = new TableColumn<Curso, Date>("Fecha de Término");
+        colFechaTermino.setCellValueFactory(new PropertyValueFactory<Curso, Date>("fechaTermino"));
+
+        tablaCursos.getColumns().addAll(colClave, colNombre, colInstructor,
+                colNoHoras, colCosto, colFechaInicio, colFechaTermino);
+
+        VBox contenedorCursos = new VBox();
+        Label tituloCursos = new Label("Lista de Cursos Registrados");
+        tituloCursos.getStyleClass().add("text-primary");
+        tituloCursos.getStyleClass().add("h4");
+        contenedorCursos.getChildren().add(tituloCursos);
+        contenedorCursos.getChildren().add(tablaCursos);
+        setBody(contenedorCursos);
+    }
+
+    private void inicializarPanelBotones() {
+        HBox contenedorBotones = new HBox();
+        contenedorBotones.setSpacing(5);
+
+        btnAgregar = new Button("Agregar");
+        btnAgregar.getStyleClass().add("btn");
+        btnAgregar.getStyleClass().add("btn-primary");
+        btnAgregar.setOnAction(evt -> {
+            curso = null;
+            cargarDatosCurso(curso);
+            mostrarPanelDerecho();
+        });
+        btnModificar = new Button("Modificar");
+        btnModificar.getStyleClass().add("btn");
+        btnModificar.getStyleClass().add("btn-info");
+        btnModificar.setOnAction(evt -> {
+            cargarDatosCurso(curso);
+            mostrarPanelDerecho();
+        });
+
+        btnEliminar = new Button("Eliminar");
+        btnEliminar.getStyleClass().add("btn");
+        btnEliminar.getStyleClass().add("btn-danger");
+        btnEliminar.setOnAction(evt -> {
+            if (eliminarCurso(curso)) {
+                Alert alertaInformacion = new Alert(Alert.AlertType.INFORMATION);
+                alertaInformacion.setTitle("Información");
+                alertaInformacion.setHeaderText("El Curso fue eliminado de manera satiscactoria");
+                alertaInformacion.setContentText(curso.getNombre());
+                alertaInformacion.show();
+            } else {
+                Alert alertaError = new Alert(Alert.AlertType.ERROR);
+                alertaError.setTitle("Información");
+                alertaError.setHeaderText("El Curso no pudo ser eliminado");
+                alertaError.setContentText(curso.getNombre());
+                alertaError.show();
+            }
+        });
+
+        btnModificar.setDisable(true);
+        btnEliminar.setDisable(true);
+        contenedorBotones.getChildren().addAll(btnAgregar, btnModificar, btnEliminar);
+
+        setFooter(contenedorBotones);
+    }
+
+    private void cargarDatosCurso(Curso curso) {
+        if (curso == null) {
+            txtClave.setText("");
+            txtDescripcion.setText("");
+            txtInstructor.setText("");
+            txtNombre.setText("");
+            dpFechaInicio.setValue(LocalDate.now().plusDays(1));
+            dpFechaTermino.setValue(LocalDate.now().plusDays(31));
+        } else {
+            txtClave.setText(curso.getClave());
+            txtDescripcion.setText(curso.getDescripcion());
+            txtInstructor.setText(curso.getInstructor());
+            txtNombre.setText(curso.getNombre());
+            dpFechaTermino.setValue(curso.getFechaTermino().toLocalDate());
+            dpFechaInicio.setValue(curso.getFechaInicio().toLocalDate());
+            spCosto.getValueFactory().setValue(curso.getCosto());
+            spNoHoras.getValueFactory().setValue(curso.getNoHoras());
+        }
+    }
+
+    private void inicializarPanelEdicionCurso() {
+        paneEdicionCursos = new VBox();
         paneEdicionCursos.setMinWidth(250);
 
         VBox contenedorCampos = new VBox();
@@ -110,7 +245,15 @@ public class ContenedorCursos extends BorderPane {
         dpFechaTermino.setPromptText("DD/MM/AAAA");
 
         Button btnAceptar = new Button("Aceptar");
+        btnAceptar.getStyleClass().add("btn");
+        btnAceptar.getStyleClass().add("btn-primary");
+        btnAceptar.getStyleClass().add("btn-sm");
+
         Button btnCancelar = new Button("Cancelar");
+        btnCancelar.getStyleClass().add("btn");
+        btnCancelar.getStyleClass().add("btn-danger");
+        btnCancelar.getStyleClass().add("btn-sm");
+
         btnCancelar.setOnAction(evt -> {
             ocultarPanelDerecho();
         });
@@ -128,8 +271,18 @@ public class ContenedorCursos extends BorderPane {
                 etiDescripcion, txtDescripcion, etiInsructor, txtInstructor, etiNoHoras, spNoHoras,
                 etiCosto, spCosto, etiFechaInicio, dpFechaInicio, etiFechaTermino, dpFechaTermino,
                 panelBotonesCurso);
-        paneEdicionCursos.setContent(new ScrollPane(contenedorCampos));
 
+        scrollPanelCurso = new ScrollPane(contenedorCampos);
+        scrollPanelCurso.setFitToWidth(true);
+
+        Label tituloEducionCursos = new Label("Captura de los Datos de un Curso");
+        tituloEducionCursos.getStyleClass().add("panel-heading");
+        tituloEducionCursos.getStyleClass().add("text-default");
+        tituloEducionCursos.getStyleClass().add("text-default");
+        tituloEducionCursos.getStyleClass().add("h4");
+
+        paneEdicionCursos.getChildren().add(tituloEducionCursos);
+        paneEdicionCursos.getChildren().add(scrollPanelCurso);
 
     }
 
@@ -188,12 +341,34 @@ public class ContenedorCursos extends BorderPane {
 
     private boolean guardarCurso(Curso curso) {
         CursosHelper ch = new CursosHelper();
-        ch.agregarCurso(curso);
+        if (curso.getId() == 0)
+            ch.agregarCurso(curso);
+        else
+            ch.modificarCurso(curso);
         return true;
+    }
+
+    private boolean eliminarCurso(Curso curso) {
+        Alert alertaError = new Alert(Alert.AlertType.CONFIRMATION);
+        alertaError.setTitle("Advertencia");
+        alertaError.setHeaderText("Esta acción no se puede deshacer. ¿Está seguro de querer eliminar el curso?");
+        alertaError.setContentText(curso.getNombre());
+        if (alertaError.showAndWait().get() == ButtonType.OK) {
+            CursosHelper ch = new CursosHelper();
+            ch.eliminarCurso(curso);
+            listaCursos.remove(curso);
+            return true;
+        } else
+            return false;
     }
 
     private void ocultarPanelDerecho() {
         setRight(null);
+    }
+
+    private void mostrarPanelDerecho() {
+        scrollPanelCurso.setVvalue(0);
+        setRight(paneEdicionCursos);
     }
 
     private void cargarDatos() {
@@ -203,63 +378,5 @@ public class ContenedorCursos extends BorderPane {
         tablaCursos.setItems(listaCursos);
     }
 
-    private void inicializarComponentes() {
-        tablaCursos = new TableView<Curso>();
 
-        colClave = new TableColumn<Curso, String>("Clave");
-        colClave.setCellValueFactory(
-                new PropertyValueFactory<Curso, String>("clave"));
-
-        colNombre = new TableColumn<Curso, String>("Nombre");
-        colNombre.setCellValueFactory(new PropertyValueFactory<Curso, String>("nombre"));
-        colNombre.setMinWidth(200);
-
-        colInstructor = new TableColumn<Curso, String>("Instructor");
-        colInstructor.setCellValueFactory(new PropertyValueFactory<Curso, String>("instructor"));
-        colInstructor.setMinWidth(200);
-
-        colNoHoras = new TableColumn<Curso, Integer>("No. Horas");
-        colNoHoras.setCellValueFactory(new PropertyValueFactory<Curso, Integer>("noHoras"));
-
-
-        colCosto = new TableColumn<Curso, String>("Costo");
-        colCosto.setCellValueFactory(
-                new PropertyValueFactory<Curso, String>("scosto"));
-        colCosto.setMinWidth(100);
-        colCosto.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-        colFechaInicio = new TableColumn<Curso, Date>("Fecha de Inicio");
-        colFechaInicio.setCellValueFactory(new PropertyValueFactory<Curso, Date>("fechaInicio"));
-
-        colFechaTermino = new TableColumn<Curso, Date>("Fecha de Término");
-        colFechaTermino.setCellValueFactory(new PropertyValueFactory<Curso, Date>("fechaTermino"));
-
-        tablaCursos.getColumns().addAll(colClave, colNombre, colInstructor,
-                colNoHoras, colCosto, colFechaInicio, colFechaTermino);
-
-        paneCursos = new TitledPane();
-        paneCursos.setText("Lista de Cursos Registrados");
-        paneCursos.setContent(tablaCursos);
-        paneCursos.setCollapsible(false);
-
-        HBox contenedorBotones = new HBox();
-        btnAgregar = new Button("Agregar");
-        btnAgregar.setOnAction(evt -> {
-            curso = null;
-            setRight(paneEdicionCursos);
-        });
-        btnModificar = new Button("Modificar");
-        btnEliminar = new Button("Eliminar");
-        btnModificar.setDisable(true);
-        btnEliminar.setDisable(true);
-        contenedorBotones.getChildren().addAll(btnAgregar, btnModificar, btnEliminar);
-
-        paneOperacionesCursos = new TitledPane();
-        paneOperacionesCursos.setText("Operaciones sobre cursos");
-        paneOperacionesCursos.setContent(contenedorBotones);
-        paneOperacionesCursos.setCollapsible(false);
-
-        setCenter(paneCursos);
-        setBottom(paneOperacionesCursos);
-    }
 }
