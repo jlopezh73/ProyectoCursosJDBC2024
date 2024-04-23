@@ -8,16 +8,23 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+
+import javafx.stage.FileChooser;
 import org.kordamp.bootstrapfx.BootstrapFX;
 import org.kordamp.bootstrapfx.scene.layout.Panel;
 
@@ -53,6 +60,11 @@ public class ContenedorCursos extends Panel {
     private Curso curso;
     private BorderPane contenedor;
     private ScrollPane scrollPanelCurso;
+    private Label etiFoto;
+    private ImageView ivFoto;
+    private Button btnAsignarFoto;
+    private Button btnQuitarFoto;
+    private byte[] datosFoto;
 
 
     private ObservableList<Curso> listaCursos;
@@ -140,6 +152,7 @@ public class ContenedorCursos extends Panel {
         btnAgregar.getStyleClass().add("btn-primary");
         btnAgregar.setOnAction(evt -> {
             curso = null;
+            datosFoto = null;
             cargarDatosCurso(curso);
             mostrarPanelDerecho();
         });
@@ -244,6 +257,21 @@ public class ContenedorCursos extends Panel {
         dpFechaTermino = new DatePicker(LocalDate.now().plusDays(31));
         dpFechaTermino.setPromptText("DD/MM/AAAA");
 
+        etiFoto = new Label("Imagen del Curso");
+        ivFoto = new ImageView();
+        ivFoto.setFitHeight(100);
+        ivFoto.setFitWidth(220);
+        btnAsignarFoto = new Button("Cargar Imagen");
+        btnAsignarFoto.setOnAction(evt -> {
+            buscarImagenes();
+        });
+        btnQuitarFoto = new Button("Quitar Imagen");
+        btnQuitarFoto.setDisable(true);
+
+        HBox contenedorBotonesFoto = new HBox();
+        contenedorBotonesFoto.setSpacing(10);
+        contenedorBotonesFoto.getChildren().addAll(btnAsignarFoto, btnQuitarFoto);
+
         Button btnAceptar = new Button("Aceptar");
         btnAceptar.getStyleClass().add("btn");
         btnAceptar.getStyleClass().add("btn-primary");
@@ -270,6 +298,7 @@ public class ContenedorCursos extends Panel {
         contenedorCampos.getChildren().addAll(etiClave, txtClave, etiNombre, txtNombre,
                 etiDescripcion, txtDescripcion, etiInsructor, txtInstructor, etiNoHoras, spNoHoras,
                 etiCosto, spCosto, etiFechaInicio, dpFechaInicio, etiFechaTermino, dpFechaTermino,
+                etiFoto, ivFoto, contenedorBotonesFoto,
                 panelBotonesCurso);
 
         scrollPanelCurso = new ScrollPane(contenedorCampos);
@@ -284,6 +313,23 @@ public class ContenedorCursos extends Panel {
         paneEdicionCursos.getChildren().add(tituloEducionCursos);
         paneEdicionCursos.getChildren().add(scrollPanelCurso);
 
+    }
+
+    private void buscarImagenes() {
+        FileChooser dialogoAbrirArchivo = new FileChooser();
+        dialogoAbrirArchivo.setTitle("Seleccionar imagen");
+        dialogoAbrirArchivo.getExtensionFilters().addAll();
+        File archivo = dialogoAbrirArchivo.showOpenDialog(null);
+        if (archivo != null) {
+            String imagen = archivo.getAbsolutePath();
+            ivFoto.setImage(new Image(imagen));
+            try {
+                FileInputStream fis = new FileInputStream(archivo);
+                datosFoto =fis.readAllBytes();
+            } catch (IOException e) {
+
+            }
+        }
     }
 
     private void validarGuardarDatos() {

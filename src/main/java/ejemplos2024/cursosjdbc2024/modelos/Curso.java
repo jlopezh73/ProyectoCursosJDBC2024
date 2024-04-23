@@ -13,6 +13,7 @@ public class Curso {
     private Date fechaInicio;
     private Date fechaTermino;
     private double costo;
+    private byte []imagen;
 
     public Curso() {
     }
@@ -103,6 +104,14 @@ public class Curso {
 
     public String getScosto() {
         return "$ "+costo;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
 
     @Override
