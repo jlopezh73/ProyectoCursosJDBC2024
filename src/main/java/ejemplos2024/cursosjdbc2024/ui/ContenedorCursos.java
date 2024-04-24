@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -24,9 +25,11 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import org.kordamp.bootstrapfx.BootstrapFX;
 import org.kordamp.bootstrapfx.scene.layout.Panel;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class ContenedorCursos extends Panel {
     private TableView<Curso> tablaCursos;
@@ -257,16 +260,34 @@ public class ContenedorCursos extends Panel {
         dpFechaTermino = new DatePicker(LocalDate.now().plusDays(31));
         dpFechaTermino.setPromptText("DD/MM/AAAA");
 
-        etiFoto = new Label("Imagen del Curso");
+        etiFoto = new Label("Imagen del Curso", new FontIcon("far-image:32"));
+        etiFoto.setAlignment(Pos.CENTER);
+        etiFoto.setTextAlignment(TextAlignment.CENTER);
+        etiFoto.setGraphicTextGap(10);
+
         ivFoto = new ImageView();
-        ivFoto.setFitHeight(100);
-        ivFoto.setFitWidth(220);
+        ivFoto.setFitHeight(150);
+        ivFoto.setFitWidth(240);
+        ivFoto.setPreserveRatio(true);
+
+        StackPane contenedorFoto = new StackPane();
+        contenedorFoto.setAlignment(Pos.CENTER);
+
+        Border borde = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, new BorderWidths(2.0)));
+        contenedorFoto.setBorder(borde);
+        contenedorFoto.getChildren().addAll( etiFoto, ivFoto);
+
         btnAsignarFoto = new Button("Cargar Imagen");
+        btnAsignarFoto.setGraphic(new FontIcon("far-file-image:24"));
         btnAsignarFoto.setOnAction(evt -> {
             buscarImagenes();
         });
         btnQuitarFoto = new Button("Quitar Imagen");
+        btnQuitarFoto.setGraphic(new FontIcon("fas-eraser:24"));
         btnQuitarFoto.setDisable(true);
+        btnQuitarFoto.setOnAction(evt-> {
+            quitarImagen();
+        });
 
         HBox contenedorBotonesFoto = new HBox();
         contenedorBotonesFoto.setSpacing(10);
@@ -295,10 +316,11 @@ public class ContenedorCursos extends Panel {
         panelBotonesCurso.getChildren().addAll(btnAceptar, btnCancelar);
 
 
+
         contenedorCampos.getChildren().addAll(etiClave, txtClave, etiNombre, txtNombre,
                 etiDescripcion, txtDescripcion, etiInsructor, txtInstructor, etiNoHoras, spNoHoras,
                 etiCosto, spCosto, etiFechaInicio, dpFechaInicio, etiFechaTermino, dpFechaTermino,
-                etiFoto, ivFoto, contenedorBotonesFoto,
+                contenedorFoto, contenedorBotonesFoto,
                 panelBotonesCurso);
 
         scrollPanelCurso = new ScrollPane(contenedorCampos);
@@ -315,17 +337,25 @@ public class ContenedorCursos extends Panel {
 
     }
 
+    private void quitarImagen() {
+        ivFoto.setImage(null);
+        btnQuitarFoto.setDisable(true);
+        datosFoto = null;
+    }
+
     private void buscarImagenes() {
         FileChooser dialogoAbrirArchivo = new FileChooser();
         dialogoAbrirArchivo.setTitle("Seleccionar imagen");
-        dialogoAbrirArchivo.getExtensionFilters().addAll();
+        dialogoAbrirArchivo.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imágenes", "*.jpg", "*.jpeg","*.png"),
+                new FileChooser.ExtensionFilter("Todos los archivos", "*.*"));
         File archivo = dialogoAbrirArchivo.showOpenDialog(null);
         if (archivo != null) {
-            String imagen = archivo.getAbsolutePath();
-            ivFoto.setImage(new Image(imagen));
+            ivFoto.setImage(new Image(archivo.toURI().toString()));
             try {
                 FileInputStream fis = new FileInputStream(archivo);
                 datosFoto =fis.readAllBytes();
+                btnQuitarFoto.setDisable(false);
             } catch (IOException e) {
 
             }

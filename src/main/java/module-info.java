@@ -3,6 +3,7 @@ module ejemplos2024.cursosjdbc2024 {
     requires javafx.fxml;
     requires java.sql;
     requires org.kordamp.bootstrapfx.core;
+    requires org.kordamp.ikonli.javafx;
 
 
     opens ejemplos2024.cursosjdbc2024 to javafx.fxml;
