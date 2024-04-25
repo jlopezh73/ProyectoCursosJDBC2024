@@ -1,6 +1,7 @@
 package ejemplos2024.cursosjdbc2024.ui;
 
 import ejemplos2024.cursosjdbc2024.helpers.CursosHelper;
+import ejemplos2024.cursosjdbc2024.helpers.CursosImagenHelper;
 import ejemplos2024.cursosjdbc2024.modelos.Curso;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -17,6 +18,7 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -210,6 +212,14 @@ public class ContenedorCursos extends Panel {
             dpFechaInicio.setValue(curso.getFechaInicio().toLocalDate());
             spCosto.getValueFactory().setValue(curso.getCosto());
             spNoHoras.getValueFactory().setValue(curso.getNoHoras());
+            if (curso.getImagen() == null) {
+                CursosImagenHelper cih = new CursosImagenHelper();
+                curso.setImagen(cih.recuperarImagen(curso.getId()));
+            }
+            if (curso.getImagen() != null)
+                ivFoto.setImage(new Image(new ByteArrayInputStream(curso.getImagen())));
+            else
+                ivFoto.setImage(null);
         }
     }
 
@@ -273,17 +283,18 @@ public class ContenedorCursos extends Panel {
         StackPane contenedorFoto = new StackPane();
         contenedorFoto.setAlignment(Pos.CENTER);
 
-        Border borde = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, new BorderWidths(2.0)));
+        Border borde = new Border(
+                   new BorderStroke(Color.BLACK, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, new BorderWidths(5.0)));
         contenedorFoto.setBorder(borde);
         contenedorFoto.getChildren().addAll( etiFoto, ivFoto);
 
         btnAsignarFoto = new Button("Cargar Imagen");
-        btnAsignarFoto.setGraphic(new FontIcon("far-file-image:24"));
+        btnAsignarFoto.setGraphic(new FontIcon("far-file-image:16:BLUE"));
         btnAsignarFoto.setOnAction(evt -> {
             buscarImagenes();
         });
         btnQuitarFoto = new Button("Quitar Imagen");
-        btnQuitarFoto.setGraphic(new FontIcon("fas-eraser:24"));
+        btnQuitarFoto.setGraphic(new FontIcon("fas-eraser:16:BLUE"));
         btnQuitarFoto.setDisable(true);
         btnQuitarFoto.setOnAction(evt-> {
             quitarImagen();
@@ -347,8 +358,10 @@ public class ContenedorCursos extends Panel {
         FileChooser dialogoAbrirArchivo = new FileChooser();
         dialogoAbrirArchivo.setTitle("Seleccionar imagen");
         dialogoAbrirArchivo.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Imágenes", "*.jpg", "*.jpeg","*.png"),
-                new FileChooser.ExtensionFilter("Todos los archivos", "*.*"));
+                new FileChooser.ExtensionFilter("Imágenes (*.jpg; *.jpeg; *.png)",
+                                    "*.jpg", "*.jpeg","*.png"),
+                new FileChooser.ExtensionFilter("Todos los archivos",
+                                    "*.*"));
         File archivo = dialogoAbrirArchivo.showOpenDialog(null);
         if (archivo != null) {
             ivFoto.setImage(new Image(archivo.toURI().toString()));
@@ -377,6 +390,7 @@ public class ContenedorCursos extends Panel {
         curso.setNoHoras(horas);
         curso.setFechaInicio(java.sql.Date.valueOf(dpFechaInicio.getValue()));
         curso.setFechaTermino(java.sql.Date.valueOf(dpFechaTermino.getValue()));
+        curso.setImagen(datosFoto);
 
         if (validarCurso(curso) && guardarCurso(curso)) {
             ocultarPanelDerecho();
@@ -421,6 +435,11 @@ public class ContenedorCursos extends Panel {
             ch.agregarCurso(curso);
         else
             ch.modificarCurso(curso);
+
+        if (curso.getImagen() != null) {
+            CursosImagenHelper cih = new CursosImagenHelper();
+            cih.asignarImagen(curso);
+        }
         return true;
     }
 
