@@ -10,4 +10,6 @@ module ejemplos2024.cursosjdbc2024 {
     opens ejemplos2024.cursosjdbc2024.modelos to javafx.fxml;
     exports ejemplos2024.cursosjdbc2024;
     exports ejemplos2024.cursosjdbc2024.modelos;
+    exports ejemplos2024.cursosjdbc2024.ui;
+    opens ejemplos2024.cursosjdbc2024.ui to javafx.fxml;
 }

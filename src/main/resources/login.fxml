@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="fondo" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ejemplos2024.cursosjdbc2024.ui.LoginController">
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="contenedorIzq" BorderPane.alignment="CENTER">
+         <children>
+            <Label styleClass="titulo1" text="Sistema Institucional para el Registro de Cursos de Educación Contínua" />
+            <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" >
+               <image>
+                  <Image url="@logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+   </left>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="contenedorDer" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@uv.png" />
+               </image>
+            </ImageView>
+            <Label styleClass="titulo2" text="Bienvenido. Para poder continuar favor de iniciar sesión" />
+            <VBox prefHeight="0.0" prefWidth="0.0" styleClass="grupoTexto">
+               <children>
+                  <Label text="Correo electrónico" />
+                  <TextField fx:id="correoElectronico" />
+               </children>
+            </VBox>
+            <VBox prefHeight="0.0" prefWidth="0.0" styleClass="grupoTexto">
+               <children>
+                  <Label styleClass="etiqueta" text="Contraseña" />
+                  <PasswordField fx:id="password" />
+               </children>
+            </VBox>
+            <VBox prefHeight="0.0" prefWidth="0.0">
+               <children>
+                  <Button fx:id="iniciarSesion" mnemonicParsing="false" styleClass="boton" text="Iniciar Sesión"  onAction="#botonOnAction" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
+            </VBox>
+            <Label styleClass="etiqueta2" text="Universidad Veracruzana - Facultad de Estadística e Informática; 2024" />
+         </children>
+      </VBox>
+   </right>
+</BorderPane>

@@ -1,0 +1,76 @@
+.fondo {
+    -fx-height: 100%;
+    -fx-background-color: linear-gradient(from 0% 40% to 100% 100%, rgba(0,148,56,1) 0%, rgba(10,83,159,1) 40%, rgba(103,103,103,1) 40%, rgba(232,232,232,1) 41%, rgba(255,255,255,1) 100%);
+}
+
+.contenedorIzq {
+    -fx-pref-width: 400px;
+    -fx-alignment: top-center;
+    -fx-padding: 20px 50px 0px 20px;
+}
+
+.contenedorDer {
+    -fx-pref-width: 400px;
+    -fx-alignment: top-center ;
+    -fx-padding: 20px 20px 20px 20px;
+}
+
+.titulo1 {
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+    -fx-padding: 20px 0px 40px 20px;
+    -fx-font-size: 2.0em;
+    -fx-wrap-text: true;
+    -fx-font-weight: bold;
+}
+
+.imagen1 {
+
+    -fx-padding: 20px 20px 40px 20px;
+}
+
+.titulo2 {
+    -fx-text-alignment: center;
+    -fx-text-fill: black;
+    -fx-padding: 10px 20px 20px 20px;
+    -fx-font-size: 1.7em;
+    -fx-wrap-text: true;
+}
+
+.etiqueta {
+    -fx-font-size: 8pt;
+    -fx-text-alignment: center;
+    -fx-text-fill: black;
+    -fx-wrap-text: true;
+}
+
+.etiqueta2 {
+    -fx-padding: 10px 10px 10px 10px;
+    -fx-font-size: 9pt;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+    -fx-text-fill: black;
+    -fx-wrap-text: true;
+}
+
+.grupoTexto {
+    -fx-padding: 5px 5px 5px 5px;
+    -fx-border-color: #ced4da;
+    -fx-background-color: #e8f0fe;
+}
+
+TextField {
+    -fx-font-size: 10pt;
+}
+
+PasswordField {
+    -fx-font-size: 10pt;
+}
+
+.boton {
+    -fx-background-color: #0d6efd;
+    -fx-text-fill: white;
+    -fx-border-radius: 30px;
+    -fx-font-size: 11pt;
+    -fx-pref-width: 360px;
+}
