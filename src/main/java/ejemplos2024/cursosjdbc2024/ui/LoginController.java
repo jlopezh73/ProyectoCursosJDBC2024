@@ -18,13 +18,21 @@ public class LoginController {
     public PasswordField password;
     @FXML
     public Button iniciarSesion;
+    private Stage loginStage=null;
+    public void setLoginStage(Stage loginStage) {
+        this.loginStage = loginStage;
+    }
     @FXML
     public void botonOnAction() {
         var sCorreo = correoElectronico.getText().toString();
         var sPassword = password.getText().toString();
         UsuariosHelper uh = new UsuariosHelper();
         var usuario = uh.validarUsuario(sCorreo, sPassword);
+
+
         if (usuario != null) {
+            loginStage.hide();
+
             Stage ventanaCursos = new Stage();
 
             var root = new ContenedorCursos();

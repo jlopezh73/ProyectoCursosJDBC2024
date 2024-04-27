@@ -35,8 +35,8 @@ public class UsuariosHelper {
 
             String instSQL = String.format("select * from usuario where correoElectronico='%s' and password='%s'", correoElectronico,  password);
 
-            PreparedStatement inst = conn.prepareStatement(instSQL);
-            ResultSet resul = inst.executeQuery();
+            Statement inst = conn.createStatement();
+            ResultSet resul = inst.executeQuery(instSQL);
             Usuario usuario = null;
             if (resul.next()) {
                 usuario = new Usuario();

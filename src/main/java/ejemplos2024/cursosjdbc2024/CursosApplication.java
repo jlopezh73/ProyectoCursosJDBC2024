@@ -1,5 +1,6 @@
 package ejemplos2024.cursosjdbc2024;
 
+import ejemplos2024.cursosjdbc2024.ui.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,9 @@ public class CursosApplication extends Application {
         //var root = new ContenedorCursos();
         var root = new FXMLLoader(getClass().getClassLoader().getResource("login.fxml"));
         Scene scene = new Scene(root.load(), 800, 500);
+        var loginController = (LoginController) root.getController();
+        loginController.setLoginStage(stage);
+
         scene.getStylesheets().add(getClass().getClassLoader().getResource("login.css").toExternalForm());
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
