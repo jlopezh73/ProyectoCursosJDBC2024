@@ -11,10 +11,11 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="fondo" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="500.0" prefWidth="800.0" styleClass="fondo" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ejemplos2024.cursosjdbc2024.ui.LoginController">
    <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="contenedorIzq" BorderPane.alignment="CENTER">
+      <VBox  styleClass="contenedorIzq" BorderPane.alignment="CENTER">
          <children>
             <Label styleClass="titulo1" text="Sistema Institucional para el Registro de Cursos de Educación Contínua" />
             <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" >

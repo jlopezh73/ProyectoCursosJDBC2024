@@ -29,7 +29,7 @@ public class LoginController {
 
             var root = new ContenedorCursos();
 
-            Scene scene = new Scene(root.load(), 800, 600);
+            Scene scene = new Scene(root, 800, 600);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
             ventanaCursos.setTitle("Gestión de Cursos de la FEI");
             ventanaCursos.setScene(scene);

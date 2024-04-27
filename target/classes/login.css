@@ -1,6 +1,10 @@
 .fondo {
     -fx-height: 100%;
-    -fx-background-color: linear-gradient(from 0% 40% to 100% 100%, rgba(0,148,56,1) 0%, rgba(10,83,159,1) 40%, rgba(103,103,103,1) 40%, rgba(232,232,232,1) 41%, rgba(255,255,255,1) 100%);
+    -fx-background-color: linear-gradient(from 0% 40% to 100% 100%, rgba(0,148,56,1) 0%,
+                                                                    rgba(10,83,159,1) 40%,
+                                                                    rgba(103,103,103,1) 40%,
+                                                                    rgba(232,232,232,1) 41%,
+                                                                    rgba(255,255,255,1) 100%);
 }
 
 .contenedorIzq {
