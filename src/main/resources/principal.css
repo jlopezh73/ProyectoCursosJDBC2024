@@ -1,0 +1,50 @@
+.fondo {
+    -fx-height: 100%;
+    -fx-background-color: linear-gradient(from 100% 100% to 20% -100%,
+    rgba(0,148,56,1) 0%,
+    rgba(10,83,159,1) 20%,
+    rgba(103,103,103,1) 20%,
+    rgba(232,232,232,1) 21%,
+    rgba(255,255,255,1) 100%);
+
+    -fx-border-color: #ccc;
+}
+
+.fondo2 {
+    
+    -fx-border-color: #ccc;
+}
+
+.boton {
+    -fx-text-alignment: center;
+    -fx-text-fill: black;
+    -fx-font-size: 1.2em;
+    -fx-wrap-text: true;
+}
+
+.imagenCircular {
+    -fx-background-image: url("foto.jpeg.png");
+    -fx-background-size: 50px, 50px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-radius: 30;
+
+}
+
+.titulo1 {
+    -fx-text-alignment: center;
+    -fx-text-fill: gray;
+    -fx-padding: 20px 20px 20px 20px;
+    -fx-font-size: 2.0em;
+    -fx-wrap-text: true;
+    -fx-font-weight: bold;
+}
+
+.titulo2 {
+    -fx-text-alignment: center;
+    -fx-text-fill: gray;
+    -fx-padding: 20px 20px 20px 20px;
+    -fx-font-size: 1.0em;
+    -fx-wrap-text: true;
+    -fx-font-weight: bold;
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <BorderPane prefHeight="100.0" prefWidth="0.0" styleClass="fondo" BorderPane.alignment="CENTER">
+         <left>
+            <ImageView fitHeight="80.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@uv.png" />
+               </image>
+            </ImageView>
+         </left>
+         <right>
+            <ImageView fitHeight="80.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@logo.png" />
+               </image>
+            </ImageView>
+         </right>
+         <center>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label styleClass="titulo1" text="Cursos UV" />
+                  <Label styleClass="boton" text="Principal" />
+                  <Label styleClass="boton" text="Cursos" />
+                  <Label styleClass="boton" text="Pagos" />
+                  <Label styleClass="boton" text="Usuarios" />
+                  <Label styleClass="boton" text="Reportes" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="imagenCircular">
+                     <image>
+                        <Image url="@foto.jpeg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
+   </top>
+</BorderPane>
