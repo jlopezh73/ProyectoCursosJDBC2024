@@ -11,7 +11,7 @@
 }
 
 .fondo2 {
-    
+
     -fx-border-color: #ccc;
 }
 
@@ -20,6 +20,7 @@
     -fx-text-fill: black;
     -fx-font-size: 1.2em;
     -fx-wrap-text: true;
+    -fx-border-color: #0000;
 }
 
 .imagenCircular {

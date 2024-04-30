@@ -31,17 +31,23 @@ public class LoginController {
 
 
         if (usuario != null) {
-            loginStage.hide();
+            try {
+                loginStage.hide();
 
-            Stage ventanaCursos = new Stage();
+                Stage ventanaPrincipal = new Stage();
 
-            var root = new ContenedorCursos();
+                var root = new FXMLLoader(getClass().getClassLoader().getResource("Principal.fxml"));
 
-            Scene scene = new Scene(root, 800, 600);
-            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-            ventanaCursos.setTitle("Gestión de Cursos de la FEI");
-            ventanaCursos.setScene(scene);
-            ventanaCursos.show();
+                Scene scene = new Scene(root.load(), 800, 600);
+                //scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                scene.getStylesheets().add(getClass().getClassLoader().getResource("principal.css")
+                        .toExternalForm());
+                ventanaPrincipal.setTitle("Gestión de Cursos de la FEI");
+                ventanaPrincipal.setScene(scene);
+                ventanaPrincipal.show();
+            } catch(Exception e) {
+                System.out.println(e);
+            }
         } else {
 
         }

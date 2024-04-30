@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ejemplos2024.cursosjdbc2024.ui.PrincipalController">
    <top>
       <BorderPane prefHeight="100.0" prefWidth="0.0" styleClass="fondo" BorderPane.alignment="CENTER">
          <left>
@@ -28,7 +29,7 @@
                <children>
                   <Label styleClass="titulo1" text="Cursos UV" />
                   <Label styleClass="boton" text="Principal" />
-                  <Label styleClass="boton" text="Cursos" />
+                  <Hyperlink fx:id="btnCursos" onAction="#cursosOnAction" styleClass="boton" text="Cursos" />
                   <Label styleClass="boton" text="Pagos" />
                   <Label styleClass="boton" text="Usuarios" />
                   <Label styleClass="boton" text="Reportes" />
@@ -42,4 +43,11 @@
          </center>
       </BorderPane>
    </top>
+   <bottom>
+      <HBox prefHeight="50.0" prefWidth="200.0" styleClass="fondo2" BorderPane.alignment="CENTER">
+         <children>
+            <Label styleClass="titulo2" text="© 2024 - AppCursosUI " />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>
