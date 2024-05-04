@@ -2,10 +2,12 @@
 
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ejemplos2024.cursosjdbc2024.ui.PrincipalController">
    <top>
@@ -33,7 +35,7 @@
                   <Label styleClass="boton" text="Pagos" />
                   <Label styleClass="boton" text="Usuarios" />
                   <Label styleClass="boton" text="Reportes" />
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="imagenCircular">
+                  <ImageView fx:id="fotoUsuario" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="imagenCircular">
                      <image>
                         <Image url="@foto.jpeg" />
                      </image>
@@ -50,4 +52,11 @@
          </children>
       </HBox>
    </bottom>
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <TilePane fx:id="cursosView" />
+         </content>
+      </ScrollPane>
+   </center>
 </BorderPane>

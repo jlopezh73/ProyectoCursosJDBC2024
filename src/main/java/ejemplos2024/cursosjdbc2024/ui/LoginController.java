@@ -46,7 +46,7 @@ public class LoginController {
                 ventanaPrincipal.setScene(scene);
                 ventanaPrincipal.show();
             } catch(Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
         } else {
 
