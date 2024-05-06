@@ -1,9 +1,11 @@
 package ejemplos2024.cursosjdbc2024.ui;
 
+import ejemplos2024.cursosjdbc2024.helpers.CursosImagenHelper;
 import ejemplos2024.cursosjdbc2024.modelos.Curso;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -13,6 +15,7 @@ import javafx.scene.paint.Stop;
 import javafx.scene.text.TextAlignment;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 
 public class DetallesCurso extends VBox {
@@ -41,6 +44,39 @@ public class DetallesCurso extends VBox {
     private Button btnQuitarFoto;
     private byte[] datosFoto;
 
+    public DetallesCurso(Curso curso) {
+        this.curso = curso;
+        inicializarPanelEdicionCurso();
+        cargarDatosCurso(curso);
+    }
+
+    private void cargarDatosCurso(Curso curso) {
+        if (curso == null) {
+            txtClave.setText("");
+            txtDescripcion.setText("");
+            txtInstructor.setText("");
+            txtNombre.setText("");
+            dpFechaInicio.setValue(LocalDate.now().plusDays(1));
+            dpFechaTermino.setValue(LocalDate.now().plusDays(31));
+        } else {
+            txtClave.setText(curso.getClave());
+            txtDescripcion.setText(curso.getDescripcion());
+            txtInstructor.setText(curso.getInstructor());
+            txtNombre.setText(curso.getNombre());
+            dpFechaTermino.setValue(curso.getFechaTermino().toLocalDate());
+            dpFechaInicio.setValue(curso.getFechaInicio().toLocalDate());
+            spCosto.getValueFactory().setValue(curso.getCosto());
+            spNoHoras.getValueFactory().setValue(curso.getNoHoras());
+            if (curso.getImagen() == null) {
+                CursosImagenHelper cih = new CursosImagenHelper();
+                curso.setImagen(cih.recuperarImagen(curso.getId()));
+            }
+            if (curso.getImagen() != null)
+                ivFoto.setImage(new Image(new ByteArrayInputStream(curso.getImagen())));
+            else
+                ivFoto.setImage(null);
+        }
+    }
     private void inicializarPanelEdicionCurso() {
         setMinWidth(250);
 
