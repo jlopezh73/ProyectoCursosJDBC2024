@@ -46,6 +46,7 @@ public class ContenedorCursos extends Panel {
     private Button btnModificar;
     private Button btnEliminar;
     private VBox paneEdicionCursos;
+
     private Label etiClave;
     private TextField txtClave;
     private Label etiNombre;

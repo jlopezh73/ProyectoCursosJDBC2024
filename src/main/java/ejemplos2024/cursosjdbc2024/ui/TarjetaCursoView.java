@@ -60,7 +60,7 @@ public class TarjetaCursoView extends Pane {
         etiTermino = new Label(curso.getFechaTermino().toString());
         etiTermino.setStyle("-fx-font-size: 9pt; -fx-font-weight: bold;");
         etiTermino.setLayoutY(135);
-        etiTermino.setLayoutX(70);
+        etiTermino.setLayoutX(90);
 
         verDetalles = new Hyperlink("Ver detalles");
         verDetalles.setStyle("-fx-font-size: 9pt; -fx-font-weight: bold;");
