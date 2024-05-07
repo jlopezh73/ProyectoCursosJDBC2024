@@ -1,6 +1,8 @@
 package ejemplos2024.cursosjdbc2024.ui;
 
 import ejemplos2024.cursosjdbc2024.helpers.UsuariosHelper;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -43,6 +45,10 @@ public class LoginController {
                 scene.getStylesheets().add(getClass().getClassLoader().getResource("principal.css")
                         .toExternalForm());
                 ventanaPrincipal.setTitle("Gestión de Cursos de la FEI");
+                ventanaPrincipal.widthProperty().addListener(evt -> {
+                    var controlador = (PrincipalController)root.getController();
+                    controlador.ajustarAncho(((ReadOnlyDoubleProperty) evt).getValue());
+                });
                 ventanaPrincipal.setScene(scene);
                 ventanaPrincipal.show();
             } catch(Exception e) {

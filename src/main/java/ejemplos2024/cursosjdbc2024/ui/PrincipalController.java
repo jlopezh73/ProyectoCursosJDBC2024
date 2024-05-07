@@ -35,6 +35,8 @@ public class PrincipalController {
 
         CursosHelper ch = new CursosHelper();
         List<Curso> listaCursos = ch.obtenerListaCursos();
+
+
         cursosView.setHgap(10);
         cursosView.setVgap(10);
         cursosView.setPrefColumns(3);
@@ -44,6 +46,13 @@ public class PrincipalController {
             var cursoView = new TarjetaCursoView(curso);
             cursosView.getChildren().add(cursoView);
         }
+    }
+
+    public void ajustarAncho(double ancho) {
+        int noColumnas = (int) (ancho / 260.0);
+        System.out.println(ancho);
+        System.out.println(noColumnas);
+        cursosView.setPrefColumns(noColumnas);
     }
     @FXML
     public void cursosOnAction() {
