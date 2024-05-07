@@ -51,14 +51,6 @@ public class DetallesCurso extends VBox {
     }
 
     private void cargarDatosCurso(Curso curso) {
-        if (curso == null) {
-            txtClave.setText("");
-            txtDescripcion.setText("");
-            txtInstructor.setText("");
-            txtNombre.setText("");
-            dpFechaInicio.setValue(LocalDate.now().plusDays(1));
-            dpFechaTermino.setValue(LocalDate.now().plusDays(31));
-        } else {
             txtClave.setText(curso.getClave());
             txtDescripcion.setText(curso.getDescripcion());
             txtInstructor.setText(curso.getInstructor());
@@ -75,7 +67,6 @@ public class DetallesCurso extends VBox {
                 ivFoto.setImage(new Image(new ByteArrayInputStream(curso.getImagen())));
             else
                 ivFoto.setImage(null);
-        }
     }
     private void inicializarPanelEdicionCurso() {
         setMinWidth(250);
@@ -142,19 +133,11 @@ public class DetallesCurso extends VBox {
         contenedorFoto.getChildren().addAll( etiFoto, ivFoto);
 
 
-        HBox contenedorBotonesFoto = new HBox();
-        contenedorBotonesFoto.setSpacing(10);
-        contenedorBotonesFoto.getChildren().addAll(btnAsignarFoto, btnQuitarFoto);
-
-
-
-
-
 
         contenedorCampos.getChildren().addAll(etiClave, txtClave, etiNombre, txtNombre,
                 etiDescripcion, txtDescripcion, etiInsructor, txtInstructor, etiNoHoras, spNoHoras,
                 etiCosto, spCosto, etiFechaInicio, dpFechaInicio, etiFechaTermino, dpFechaTermino,
-                contenedorFoto, contenedorBotonesFoto);
+                contenedorFoto);
 
         scrollPanelCurso = new ScrollPane(contenedorCampos);
         scrollPanelCurso.setFitToWidth(true);

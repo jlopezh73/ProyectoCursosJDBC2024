@@ -1,6 +1,7 @@
 package ejemplos2024.cursosjdbc2024.ui;
 
 import ejemplos2024.cursosjdbc2024.modelos.Curso;
+import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -8,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 public class TarjetaCursoView extends Pane {
     private Label etiClave;
@@ -66,6 +68,14 @@ public class TarjetaCursoView extends Pane {
         verDetalles.setStyle("-fx-font-size: 9pt; -fx-font-weight: bold;");
         verDetalles.setLayoutY(150);
         verDetalles.setLayoutX(10);
+        verDetalles.setOnAction(evt -> {
+            Stage ventanDetalles = new Stage();
+            DetallesCurso detalles = new DetallesCurso(curso);
+            Scene escenaDetalles = new Scene(detalles, 300, 400);
+            ventanDetalles.setScene(escenaDetalles);
+            ventanDetalles.setTitle("Detalles del Curso - "+curso.getNombre());
+            ventanDetalles.showAndWait();
+        });
 
 
         getChildren().addAll(foto, etiClave, etiNombre, etiInicio, etiTermino, verDetalles);
