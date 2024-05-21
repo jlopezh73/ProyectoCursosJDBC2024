@@ -33,7 +33,7 @@ public class UsuariosHelper {
 
             Connection conn = ConexionDBCursos.obtenerInstancia();
 
-            String instSQL = String.format("select * from usuario where correoElectronico='%s' and password='%s'", correoElectronico,  password);
+//            String instSQL = String.format("select * from usuario where correoElectronico='%s' and password='%s'", correoElectronico,  password);
 
             Statement inst = conn.createStatement();
             ResultSet resul = inst.executeQuery(instSQL);

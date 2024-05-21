@@ -1,5 +1,6 @@
 package ejemplos2024.cursosjdbc2024.ui;
 
+import ejemplos2024.cursosjdbc2024.helpers.CursosImagenHelper;
 import ejemplos2024.cursosjdbc2024.modelos.Curso;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
@@ -10,6 +11,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import java.io.ByteArrayInputStream;
 
 public class TarjetaCursoView extends Pane {
     private Label etiClave;
@@ -27,7 +30,7 @@ public class TarjetaCursoView extends Pane {
     }
 
     private void inicializarComponentes() {
-        String imagenes[] = {"foto1.png","foto2.png","foto3.png","foto4.png","foto5.png","foto6.png","foto7.png","foto8.png"};
+
 
         this.setPrefSize(250, 180);
         this.setStyle("-fx-background-color: #fff; -fx-border-color: #aaa;");
@@ -36,8 +39,12 @@ public class TarjetaCursoView extends Pane {
         recorte.setWidth(248);
         recorte.setHeight(98);
 
-        String nombreFoto = imagenes[(int) (Math.random()*8.0)];
-        foto = new ImageView(new Image(getClass().getClassLoader().getResource(nombreFoto).toExternalForm()));
+        CursosImagenHelper cih = new CursosImagenHelper();
+        byte []arr = cih.recuperarImagen(curso.getId());
+        if (arr != null)
+            foto = new ImageView(new Image(new ByteArrayInputStream(arr)));
+        else
+            foto = new ImageView();
         foto.setPreserveRatio(true);
         foto.setFitWidth(248);
         foto.setLayoutY(0);

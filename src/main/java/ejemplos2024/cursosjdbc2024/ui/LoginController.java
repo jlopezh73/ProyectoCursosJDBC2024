@@ -26,6 +26,10 @@ public class LoginController {
     }
     @FXML
     public void botonOnAction() {
+        validarUsuario();
+    }
+
+    private void validarUsuario() {
         var sCorreo = correoElectronico.getText().toString();
         var sPassword = password.getText().toString();
         UsuariosHelper uh = new UsuariosHelper();

@@ -52,13 +52,21 @@ public class DetallesCurso extends VBox {
 
     private void cargarDatosCurso(Curso curso) {
             txtClave.setText(curso.getClave());
+            txtClave.setEditable(false);
             txtDescripcion.setText(curso.getDescripcion());
+            txtDescripcion.setEditable(false);
             txtInstructor.setText(curso.getInstructor());
+            txtInstructor.setEditable(false);
             txtNombre.setText(curso.getNombre());
+            txtNombre.setEditable(false);
             dpFechaTermino.setValue(curso.getFechaTermino().toLocalDate());
+            dpFechaTermino.setDisable(true);
             dpFechaInicio.setValue(curso.getFechaInicio().toLocalDate());
+            dpFechaInicio.setDisable(true);
             spCosto.getValueFactory().setValue(curso.getCosto());
+            spCosto.setDisable(true);
             spNoHoras.getValueFactory().setValue(curso.getNoHoras());
+            spNoHoras.setDisable(true);
             if (curso.getImagen() == null) {
                 CursosImagenHelper cih = new CursosImagenHelper();
                 curso.setImagen(cih.recuperarImagen(curso.getId()));

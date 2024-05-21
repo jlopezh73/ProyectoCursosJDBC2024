@@ -10,15 +10,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="500.0" prefWidth="800.0" styleClass="fondo" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ejemplos2024.cursosjdbc2024.ui.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="fondo" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ejemplos2024.cursosjdbc2024.ui.LoginController">
    <left>
-      <VBox  styleClass="contenedorIzq" BorderPane.alignment="CENTER">
+      <VBox styleClass="contenedorIzq" BorderPane.alignment="CENTER">
          <children>
             <Label styleClass="titulo1" text="Sistema Institucional para el Registro de Cursos de Educación Contínua" />
-            <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" >
+            <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                <image>
                   <Image url="@logo.png" />
                </image>
@@ -38,18 +35,18 @@
             <VBox prefHeight="0.0" prefWidth="0.0" styleClass="grupoTexto">
                <children>
                   <Label text="Correo electrónico" />
-                  <TextField fx:id="correoElectronico" />
+                  <TextField fx:id="correoElectronico" onAction="#botonOnAction" />
                </children>
             </VBox>
             <VBox prefHeight="0.0" prefWidth="0.0" styleClass="grupoTexto">
                <children>
                   <Label styleClass="etiqueta" text="Contraseña" />
-                  <PasswordField fx:id="password" />
+                  <PasswordField fx:id="password" onAction="#botonOnAction" />
                </children>
             </VBox>
             <VBox prefHeight="0.0" prefWidth="0.0">
                <children>
-                  <Button fx:id="iniciarSesion" mnemonicParsing="false" styleClass="boton" text="Iniciar Sesión"  onAction="#botonOnAction" />
+                  <Button fx:id="iniciarSesion" mnemonicParsing="false" onAction="#botonOnAction" styleClass="boton" text="Iniciar Sesión" />
                </children>
                <padding>
                   <Insets bottom="5.0" top="5.0" />
